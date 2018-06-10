@@ -1,6 +1,26 @@
 <resources>
-    <string name="app_name">Projek 2 Movie Dicoding</string>
+    <string name="app_name">Projek Movie Dicoding</string>
+    <string name="btn_share">Share</string>
+    <string name="btn_detail">Detail</string>
+    <string name="btn_cari">Search</string>
+    <string name="hint_judul_film">Movie Title</string>
+    <string name="title_now_playing">Now Playing</string>
+    <string name="title_upcoming">Upcoming</string>
+    <string name="title_search">Search</string>
+    <string name="title_config">Configuration</string>
+    <string name="toolbar_title_upcoming">Upcoming Movie</string>
+    <string name="title">Title</string>
+    <string name="release_date">Release Date</string>
+    <string name="vote">Vote Average</string>
+    <string name="overview">Overview</string>
+    <string name="menu_list_view">List View</string>
+    <string name="menu_card_view">Card View</string>
+    <string name="action_localization">Change Language</string>
+    <string name="toolbar_title_now_playing">Now Playing Movie</string>
+    <string name="toolbar_title_search">Search Movie</string>
+    <string name="nav_title_fav">Favorite</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_first_run">AppFirstRun</string>
 </resources>

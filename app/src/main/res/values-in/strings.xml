@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Projek 3 Movie Dicoding</string>
+    <string name="btn_share">Bagikan</string>
+    <string name="btn_detail">Detail</string>
+    <string name="btn_cari">Cari</string>
+    <string name="hint_judul_film">Judul Film</string>
+    <string name="toolbar_title_upcoming">Film Akan Datang</string>
+    <string name="action_localization">Ganti Bahasa</string>
+    <string name="menu_card_view">Card View</string>
+    <string name="menu_list_view">List View</string>
+    <string name="title_now_playing">Sedang Tayang</string>
+    <string name="title_upcoming">Tayangan Mendatang</string>
+    <string name="title_search">Pencarian</string>
+    <string name="title_config">Konfigurasi</string>
+    <string name="title">Judul</string>
+    <string name="release_date">Tanggal Rilis</string>
+    <string name="vote">Rerata Vote</string>
+    <string name="overview">Deskripsi</string>
+    <string name="toolbar_title_now_playing">Film Sedang Tayang</string>
+    <string name="toolbar_title_search">Cari Film</string>
+</resources>

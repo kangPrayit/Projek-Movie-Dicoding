@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_now_playing"
+        android:icon="@drawable/ic_now_playing_white_24dp"
+        android:title="@string/title_now_playing" />
+    <item
+        android:id="@+id/nav_upcoming"
+        android:icon="@drawable/ic_upcoming_white_24dp"
+        android:title="@string/title_upcoming" />
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@drawable/ic_search_white_24dp"
+        android:title="@string/title_search" />
+    <item
+        android:id="@+id/nav_fav"
+        android:icon="@drawable/ic_favorite_black_24dp"
+        android:title="@string/nav_title_fav" />
+</menu>
