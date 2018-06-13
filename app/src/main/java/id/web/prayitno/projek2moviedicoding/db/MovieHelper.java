@@ -4,15 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import id.web.prayitno.projek2moviedicoding.model.Movie;
 
-import static id.web.prayitno.projek2moviedicoding.db.DatabaseContract.TABLE_FAVORITE;
 import static id.web.prayitno.projek2moviedicoding.db.DatabaseContract.FavoriteColumns;
+import static id.web.prayitno.projek2moviedicoding.db.DatabaseContract.TABLE_FAVORITE;
 
 public class MovieHelper {
     private Context mContext;

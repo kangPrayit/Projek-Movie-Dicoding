@@ -3,6 +3,7 @@ package id.web.prayitno.projek2moviedicoding.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import static id.web.prayitno.projek2moviedicoding.db.DatabaseContract.FavoriteColumns;
 import static id.web.prayitno.projek2moviedicoding.db.DatabaseContract.TABLE_FAVORITE;
 

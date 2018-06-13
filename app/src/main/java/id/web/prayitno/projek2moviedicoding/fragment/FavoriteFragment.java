@@ -10,15 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.web.prayitno.projek2moviedicoding.R;
-import id.web.prayitno.projek2moviedicoding.adapter.CardViewMovieAdapter;
-import id.web.prayitno.projek2moviedicoding.db.MovieHelper;
-import id.web.prayitno.projek2moviedicoding.model.Movie;
+import id.web.prayitno.projek2moviedicoding.adapter.CardViewMoveCursorAdapter;
 
 import static id.web.prayitno.projek2moviedicoding.db.DatabaseContract.CONTENT_URI;
 
@@ -29,8 +26,8 @@ public class FavoriteFragment extends Fragment {
     @BindView(R.id.rv_fav_movie)
     RecyclerView rvFavMovie;
 
-    ArrayList<Movie> favMovies;
-    CardViewMovieAdapter cardViewMovieAdapter;
+    Cursor favMoviesCursor;
+    CardViewMoveCursorAdapter mCardViewMoveCursorAdapter;
 
 
     public FavoriteFragment() {
@@ -44,25 +41,17 @@ public class FavoriteFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         ButterKnife.bind(this, view);
 
-        // Load Data From SQLite
-        MovieHelper movieHelper = new MovieHelper(getContext());
+        // Load Data From ContentProvider
+        rvFavMovie.setLayoutManager(new LinearLayoutManager(getContext()));
+        mCardViewMoveCursorAdapter = new CardViewMoveCursorAdapter(getContext(), favMoviesCursor, getFragmentManager().beginTransaction());
+        rvFavMovie.setAdapter(mCardViewMoveCursorAdapter);
 
-        movieHelper.open();
-        favMovies = movieHelper.getAllFavMovies();
-        movieHelper.close();
-
-        showRecycleCard();
+        new LoadFavMoviesAsync().execute();
 
         return view;
     }
 
-    private void showRecycleCard() {
-        rvFavMovie.setLayoutManager(new LinearLayoutManager(getContext()));
-        cardViewMovieAdapter = new CardViewMovieAdapter(getContext(), favMovies, getFragmentManager().beginTransaction());
-        rvFavMovie.setAdapter(cardViewMovieAdapter);
-    }
-
-    private class LoadMovieAsync extends AsyncTask<Void, Void, Cursor>{
+    private class LoadFavMoviesAsync extends AsyncTask<Void, Void, Cursor>{
 
         @Override
         protected Cursor doInBackground(Void... voids) {
@@ -73,6 +62,17 @@ public class FavoriteFragment extends Fragment {
                     null,
                     null
             );
+        }
+
+        @Override
+        protected void onPostExecute(Cursor cursor) {
+            super.onPostExecute(cursor);
+            favMoviesCursor = cursor;
+            mCardViewMoveCursorAdapter.setFavMovieList(favMoviesCursor);
+            mCardViewMoveCursorAdapter.notifyDataSetChanged();
+            if (favMoviesCursor.getCount() == 0){
+                Toast.makeText(getContext(), "Tidak Ada Data Saat Ini", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package id.web.prayitno.projek2moviedicoding.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
@@ -15,8 +16,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import id.web.prayitno.projek2moviedicoding.R;
@@ -24,29 +23,30 @@ import id.web.prayitno.projek2moviedicoding.fragment.DetailFilmFragment;
 import id.web.prayitno.projek2moviedicoding.model.Movie;
 import id.web.prayitno.projek2moviedicoding.network.ApiClient;
 
-public class CardViewMovieAdapter extends RecyclerView.Adapter<CardViewMovieAdapter.MyHolder> {
+public class CardViewMoveCursorAdapter extends RecyclerView.Adapter<id.web.prayitno.projek2moviedicoding.adapter.CardViewMoveCursorAdapter.MyHolder> {
 
     private Context mContext;
-    private ArrayList<Movie> mMovies;
     private FragmentTransaction mFragmentTransaction;
+    private Cursor mFavMoviesCursor;
+    private Cursor mFavMovieList;
 
-    public CardViewMovieAdapter(Context context, ArrayList<Movie> movies, FragmentTransaction fragmentTransaction) {
+    public CardViewMoveCursorAdapter(Context context, Cursor favMoviesCursor, FragmentTransaction fragmentTransaction) {
         mContext = context;
-        mMovies = movies;
+        mFavMoviesCursor = favMoviesCursor;
         mFragmentTransaction = fragmentTransaction;
     }
 
     @NonNull
     @Override
-    public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public id.web.prayitno.projek2moviedicoding.adapter.CardViewMoveCursorAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_cardview_movie, parent, false);
-        return new MyHolder(itemView);
+        return new id.web.prayitno.projek2moviedicoding.adapter.CardViewMoveCursorAdapter.MyHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-        final Movie movie = mMovies.get(position);
+    public void onBindViewHolder(MyHolder holder, int position) {
+        final Movie movie = getMovieCursorItem(position);
         holder.tvJudul.setText(movie.getTitle());
         holder.tvDeskripsi.setText(movie.getOverview());
         holder.tvTanggalRilis.setText(movie.getReleaseDate());
@@ -61,6 +61,7 @@ public class CardViewMovieAdapter extends RecyclerView.Adapter<CardViewMovieAdap
                 DetailFilmFragment detailFilmFragment = new DetailFilmFragment();
                 detailFilmFragment.setArguments(mBundle);
                 mFragmentTransaction.replace(R.id.fragment_container, detailFilmFragment);
+                mFragmentTransaction.addToBackStack(null);
                 mFragmentTransaction.commit();
             }
         });
@@ -76,9 +77,21 @@ public class CardViewMovieAdapter extends RecyclerView.Adapter<CardViewMovieAdap
         });
     }
 
+    private Movie getMovieCursorItem(int position) {
+        if (!mFavMoviesCursor.moveToPosition(position)){
+            throw new IllegalStateException("Position Invalid");
+        }
+        return new Movie(mFavMoviesCursor);
+    }
+
     @Override
     public int getItemCount() {
-        return mMovies.size();
+        if (mFavMoviesCursor == null) return 0;
+        return mFavMoviesCursor.getCount();
+    }
+
+    public void setFavMovieList(Cursor favMovieList) {
+        mFavMoviesCursor = favMovieList;
     }
 
     public class MyHolder extends RecyclerView.ViewHolder {

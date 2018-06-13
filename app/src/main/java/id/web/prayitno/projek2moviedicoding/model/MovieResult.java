@@ -3,7 +3,7 @@ package id.web.prayitno.projek2moviedicoding.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class MovieResult {
     @SerializedName("page")
@@ -17,7 +17,7 @@ public class MovieResult {
     private Integer totalPages;
     @SerializedName("results")
     @Expose
-    private List<Movie> results = null;
+    private ArrayList<Movie> results = null;
 
     public Integer getPage() {
         return page;
@@ -43,11 +43,11 @@ public class MovieResult {
         this.totalPages = totalPages;
     }
 
-    public List<Movie> getResults() {
+    public ArrayList<Movie> getResults() {
         return results;
     }
 
-    public void setResults(List<Movie> results) {
+    public void setResults(ArrayList<Movie> results) {
         this.results = results;
     }
 }

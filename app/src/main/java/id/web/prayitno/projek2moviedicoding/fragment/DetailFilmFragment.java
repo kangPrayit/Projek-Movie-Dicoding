@@ -1,6 +1,9 @@
 package id.web.prayitno.projek2moviedicoding.fragment;
 
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +18,7 @@ import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import id.web.prayitno.projek2moviedicoding.MovieAppWidget;
 import id.web.prayitno.projek2moviedicoding.R;
 import id.web.prayitno.projek2moviedicoding.db.MovieHelper;
 import id.web.prayitno.projek2moviedicoding.model.Movie;
@@ -95,11 +99,21 @@ public class DetailFilmFragment extends Fragment {
                             Toast.LENGTH_SHORT
                     ).show();
                 }
-
+                updateFavWidget();
             }
         });
 
         return view;
+    }
+
+    // inform widget
+    public void updateFavWidget(){
+        Intent intent = new Intent(getContext(), MovieAppWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        int[] ids = AppWidgetManager.getInstance(getActivity().getApplication())
+                .getAppWidgetIds(new ComponentName(getActivity().getApplication(), MovieAppWidget.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        getActivity().sendBroadcast(intent);
     }
 
 }

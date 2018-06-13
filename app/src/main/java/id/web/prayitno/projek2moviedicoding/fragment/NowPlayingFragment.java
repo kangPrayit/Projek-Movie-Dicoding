@@ -1,5 +1,7 @@
 package id.web.prayitno.projek2moviedicoding.fragment;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -7,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,12 +26,7 @@ import id.web.prayitno.projek2moviedicoding.R;
 import id.web.prayitno.projek2moviedicoding.adapter.CardViewMovieAdapter;
 import id.web.prayitno.projek2moviedicoding.adapter.ListViewMovieAdapter;
 import id.web.prayitno.projek2moviedicoding.model.Movie;
-import id.web.prayitno.projek2moviedicoding.model.MovieResult;
-import id.web.prayitno.projek2moviedicoding.network.ApiClient;
-import id.web.prayitno.projek2moviedicoding.network.ApiService;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import id.web.prayitno.projek2moviedicoding.model.MovieModel;
 
 
 public class NowPlayingFragment extends Fragment {
@@ -63,27 +59,21 @@ public class NowPlayingFragment extends Fragment {
 
         moviesData = new ArrayList<>();
 
-        showRecycleCard();
-
-        ApiService apiService = ApiClient.getRetrofit().create(ApiService.class);
-
-        Call<MovieResult> nowPlayingMovies = apiService.getNowPlayingMovie(ApiClient.TMDB_API_KEY);
-        nowPlayingMovies.enqueue(new Callback<MovieResult>() {
+        MovieModel movieModel = ViewModelProviders.of(getActivity()).get(MovieModel.class);
+        movieModel.getMoviesNowPlaying().observe(this, new Observer<ArrayList<Movie>>() {
             @Override
-            public void onResponse(Call<MovieResult> call, Response<MovieResult> response) {
-                Log.e("FILM", "Jumlah Movie: " + response.body().getResults().size());
+            public void onChanged(@Nullable ArrayList<Movie> movies) {
                 moviesData.clear();
-                moviesData.addAll(response.body().getResults());
+                moviesData.addAll(movies);
+//                Log.e("FragmentNowPlaying", "Jumlah Movie Now Playing: " + moviesData.size());
                 cardViewMovieAdapter.notifyDataSetChanged();
                 mShimmerFrameLayout.stopShimmer();
                 mShimmerFrameLayout.setVisibility(View.GONE);
             }
-
-            @Override
-            public void onFailure(Call<MovieResult> call, Throwable t) {
-
-            }
         });
+
+        showRecycleCard();
+
         return view;
     }
 
@@ -103,11 +93,9 @@ public class NowPlayingFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_card:
-//                Toast.makeText(getContext(), "CARD", Toast.LENGTH_LONG).show();
                 showRecycleCard();
                 break;
             case R.id.action_list:
-//                Toast.makeText(getContext(), "LIST", Toast.LENGTH_LONG).show();
                 showRecycleList();
                 break;
             case R.id.action_localization:
@@ -129,4 +117,5 @@ public class NowPlayingFragment extends Fragment {
         ListViewMovieAdapter listViewMovieAdapter = new ListViewMovieAdapter(getContext(), moviesData, getFragmentManager().beginTransaction());
         rvNowPlaying.setAdapter(listViewMovieAdapter);
     }
+
 }

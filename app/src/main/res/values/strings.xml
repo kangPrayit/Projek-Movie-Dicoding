@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Projek Movie Dicoding</string>
+    <string name="app_name">Last Project Movie Dicoding</string>
     <string name="btn_share">Share</string>
     <string name="btn_detail">Detail</string>
     <string name="btn_cari">Search</string>
@@ -23,4 +23,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="app_first_run">AppFirstRun</string>
+    <string name="nav_title_settings">Settings</string>
+    <string name="appwidget_text">Movie</string>
+    <string name="add_widget">Add widget</string>
+    <string name="empty_view">NO DATA</string>
 </resources>

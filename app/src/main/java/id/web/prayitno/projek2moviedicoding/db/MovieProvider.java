@@ -17,7 +17,7 @@ public class MovieProvider extends ContentProvider {
     public static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        // content://id.web.prayitno.projek2moviedicoding/movie
+        // content://id.web.prayitno.projek2moviedicoding/favorite
         sUriMatcher.addURI(AUTHORITY, TABLE_FAVORITE, MOVIE);
         sUriMatcher.addURI(
                 AUTHORITY,
